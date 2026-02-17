@@ -60,7 +60,8 @@ def luhn_is_valid(number: str) -> bool:
         False otherwise
     """
     # TODO: Implement Luhn algorithm
-    pass
+    rev = [int(ch) for ch in str(number)][::-1]
+    return (sum(rev[0::2]) + sum(sum(divmod(d * 2, 10)) for d in rev[1::2])) % 10 == 0
 
 def remove_space_hyphens(value: str) -> str:
     value = value.replace(" ", "")
@@ -103,7 +104,9 @@ def validate_card_number(card_number: str) -> Tuple[str, str]:
     #Lenght
     if len(card_number) < 13 or len(card_number) > 19: 
         return ("", "Invalid size")
-    
+    #Luhn algorithm
+    if not luhn_is_valid(card_number):
+        return ("", "No valid by luhn")
     return (card_number, "")
 
 def validate_exp_date(exp_date: str) -> Tuple[str, str]:
